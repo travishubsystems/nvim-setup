@@ -1,89 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-What is Kickstart?
-
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
-
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
-
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
-      - https://learnxinyminutes.com/docs/lua/
-
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
-Kickstart Guide:
-
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
-
-    (If you already know the Neovim basics, you can skip this step.)
-
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
-
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
-
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
-
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
-
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
-
-   NOTE: Look for lines like this
-
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
-
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now! :)
---]]
-
 -- ============================================================
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
@@ -122,7 +36,7 @@ do
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
-  vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+  -- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
   -- Enable break indent
   vim.o.breakindent = true
@@ -966,12 +880,12 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
-  -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+	require 'kickstart.plugins.debug'
+	require 'kickstart.plugins.indent_line'
+	require 'kickstart.plugins.lint'
+	require 'kickstart.plugins.autopairs'
+	require 'kickstart.plugins.neo-tree'
+	require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
@@ -981,3 +895,86 @@ end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+
+
+	 -- chab stuff
+	-- GENERAL SETTINGS --------------------------------------------------------
+	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to Definition" })
+	vim.opt.expandtab = false        -- Use actual tabs instead of spaces
+	vim.opt.tabstop = 4              -- Number of spaces a tab counts for
+	vim.opt.shiftwidth = 4           -- Size of an indent
+	vim.opt.softtabstop = 0          -- Match tabs exactly without inserting spaces
+	vim.opt.number = true            -- Show line numbers
+	vim.opt.relativenumber = true    -- Show relative line numbers
+	vim.opt.hlsearch = true          -- Highlight search results
+	vim.opt.incsearch = true         -- Show search matches while typing
+	vim.opt.ignorecase = true        -- Ignore case in search patterns
+	vim.opt.smartcase = true         -- Override ignorecase if search has capitals
+	vim.opt.cursorline = true        -- Highlight the current line
+	vim.opt.wildmenu = true          -- Visual autocomplete for command menu
+	vim.opt.showcmd = true           -- Show partial command in status line
+	vim.opt.ruler = true             -- Show cursor position line and column
+	vim.opt.tabstop = 4              -- Number of spaces a tab counts for
+	vim.opt.shiftwidth = 4           -- Size of an indent
+	vim.opt.autoindent = true        -- Copy indent from current line when starting a new one
+	vim.opt.history = 1000           -- Keep 1000 lines of command line history
+	vim.cmd("syntax on")             -- Enable syntax highlighting
+
+	-- clipboard settings
+	vim.keymap.set('v', '<RightMouse>', '"+y')
+	vim.keymap.set('v', '<C-S-C>', '"+y')
+	
+	vim.g.clipboard = {
+		name = 'OSC 52',
+		copy = {
+			['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+			['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+		},
+		paste = {
+			['+'] = function() return {} end,
+			['*'] = function() return {} end,
+		},
+	}
+
+
+	-- FOLDING -----------------------------------------------------------------
+	vim.opt.foldmethod = "indent"    -- Fold based on indent
+	vim.opt.foldexpr = ""            -- Clear any conflicting global expressions
+	vim.opt.foldlevel = 99           -- Force current buffer folds to stay open
+	vim.opt.foldlevelstart = 99      -- Start new buffers with all folds open
+	vim.opt.foldenable = true        -- Ensure folding features are active
+
+	-- MAPPINGS ---------------------------------------------------------------
+	-- Map <Space> to toggle folds (za) in normal mode
+	vim.keymap.set("n", "<space>", "za", { remap = true })
+
+	-- Move current line or selected lines up/down with Alt+Up / Alt+Down
+	vim.keymap.set("n", "<M-Down>", ":m .+1<CR>==", { desc = "Move line down" })
+	vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==", { desc = "Move line up" })
+
+	vim.keymap.set("i", "<M-Down>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+	vim.keymap.set("i", "<M-Up>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
+
+	vim.keymap.set("v", "<M-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+	vim.keymap.set("v", "<M-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+	-- PLUGINS ----------------------------------------------------------------
+
+	-- MAPPINGS (ADDITIONAL) --------------------------------------------------
+	-- Mappings code goes here.
+	
+	-- VIMSCRIPT / AUTOCOMMANDS -----------------------------------------------
+	-- Enable marker folding specifically for Vim files
+	local vim_fold_group = vim.api.nvim_create_augroup("filetype_vim", { clear = true })
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "vim",
+		group = vim_fold_group,
+		callback = function()
+			vim.opt_local.foldmethod = "marker"
+		end,
+	})
+	
+	
+	-- STATUS LINE ------------------------------------------------------------
+	-- Status bar code goes here.
+

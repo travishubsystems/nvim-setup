@@ -1,5 +1,6 @@
 # kickstart.nvim
 
+```
 1. Deps (WSL Ubuntu)
 bash
 sudo apt update
@@ -15,7 +16,6 @@ rm nvim-linux-x86_64.tar.gz
 echo 'export PATH="$PATH:/opt/nvim/bin:$HOME/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
 nvim --version | head -1   # must be >= 0.12
-
 If that prints < 0.12, grab the nightly instead: swap latest/download for download/nightly.
 
 3. The config
@@ -33,6 +33,7 @@ First launch pulls plugins via vim.pack and installs LSP/treesitter bits — let
 vim
 :checkhealth
 :lua vim.pack.update()
+```
 
 ## Introduction
 

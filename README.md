@@ -7,6 +7,10 @@ sudo apt update
 sudo apt install -y git make gcc g++ unzip curl ripgrep fd-find xclip
 # fd-find installs the binary as `fdfind` on Debian/Ubuntu — symlink it:
 mkdir -p ~/.local/bin && ln -sf "$(which fdfind)" ~/.local/bin/fd
+
+also you need node
+
+
 2. Neovim (latest release tarball, not apt)
 bash
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz

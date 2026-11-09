@@ -1,5 +1,44 @@
 # kickstart.nvim
 
+```
+1. Deps (WSL Ubuntu)
+bash
+sudo apt update
+sudo apt install -y git make gcc g++ unzip curl ripgrep fd-find xclip
+# fd-find installs the binary as `fdfind` on Debian/Ubuntu — symlink it:
+mkdir -p ~/.local/bin && ln -sf "$(which fdfind)" ~/.local/bin/fd
+
+also you need node
+
+
+2. Neovim (latest release tarball, not apt)
+bash
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim && sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+sudo mv /opt/nvim-linux-x86_64 /opt/nvim
+rm nvim-linux-x86_64.tar.gz
+echo 'export PATH="$PATH:/opt/nvim/bin:$HOME/.local/bin"' >> ~/.bashrc
+source ~/.bashrc
+nvim --version | head -1   # must be >= 0.12
+If that prints < 0.12, grab the nightly instead: swap latest/download for download/nightly.
+
+3. The config
+bash
+# back up anything existing
+mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null
+mv ~/.local/share/nvim ~/.local/share/nvim.bak 2>/dev/null
+
+git clone https://github.com/travishubsystems/nvim-setup.git ~/.config/nvim
+nvim
+
+First launch pulls plugins via vim.pack and installs LSP/treesitter bits — let it finish, then :q and reopen.
+
+4. Check / maintain
+vim
+:checkhealth
+:lua vim.pack.update()
+```
+
 ## Introduction
 
 A starting point for Neovim that is:

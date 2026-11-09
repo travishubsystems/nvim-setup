@@ -959,6 +959,12 @@ end
 	vim.keymap.set("v", "<M-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 	vim.keymap.set("v", "<M-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 	-- PLUGINS ----------------------------------------------------------------
+	-- VSCode-style Ctrl+D multi-cursor
+	vim.g.VM_maps = {
+		['Find Under'] = '<C-d>',         -- normal mode: select word, then add next match
+		['Find Subword Under'] = '<C-d>', -- visual mode: use the current selection as the pattern
+	}
+	vim.pack.add { gh 'mg979/vim-visual-multi' }
 
 	-- MAPPINGS (ADDITIONAL) --------------------------------------------------
 	-- Mappings code goes here.

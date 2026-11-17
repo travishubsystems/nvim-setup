@@ -589,56 +589,50 @@ do
 								vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
 							end,
 						})
-					end
+			end
 
-					-- The following code creates a keymap to toggle inlay hints in your
-					-- code, if the language server you are using supports them
-					--
-					-- This may be unwanted, since they displace some of your code
+			-- The following code creates a keymap to toggle inlay hints in your
+			-- code, if the language server you are using supports them
+			--
+			-- This may be unwanted, since they displace some of your code
 			if client and client:supports_method('textDocument/inlayHint', event.buf) then
 				map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
 			end
 		end,
 	})
 
-	
+
 	-- for puma's fuckass old ass OS
-	local local_clangd = vim.fn.expand('~/.local/bin/clangd')
-	vim.lsp.config('clangd', {
-		cmd = vim.fn.executable(local_clangd) == 1 and { local_clangd } or { 'clangd' },
-	})
+	local local_clangd = vim.fn.expand '~/.local/bin/clangd'
 
-	-- Enable the following language servers
-	--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-			--  See `:help lsp-config` for information about keys and how to configure
-			---@type table<string, vim.lsp.Config>
-			local servers = {
-				clangd = {
-					cmd = {
-						'clangd',
-						'--query-driver=' .. vim.fn.expand '~' .. '/.platformio/packages/toolchain-*/bin/*-gcc',
-						'--background-index',
-						'--clang-tidy',
-						'--header-insertion=never',
-					},
-				},
-				-- gopls = {},
-				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
-				--
-				-- Some languages (like typescript) have entire language plugins that can be useful:
-				--    https://github.com/pmizio/typescript-tools.nvim
-				--
-				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				-- ts_ls = {},
+	---@type table<string, vim.lsp.Config>
+	local servers = {
+		clangd = {
+			cmd = {
+				vim.fn.executable(local_clangd) == 1 and local_clangd or 'clangd',
+				'--query-driver=' .. vim.fn.expand '~' .. '/.platformio/packages/toolchain-*/bin/*-gcc',
+				'--background-index',
+				'--clang-tidy',
+				'--header-insertion=never',
+			},
+		},
+		-- gopls = {},
+		-- gopls = {},
+		-- pyright = {},
+		-- rust_analyzer = {},
+		--
+		-- Some languages (like typescript) have entire language plugins that can be useful:
+		--    https://github.com/pmizio/typescript-tools.nvim
+		--
+		-- But for many setups, the LSP (`ts_ls`) will work just fine
+		-- ts_ls = {},
 
-				stylua = {}, -- Used to format Lua code
+		stylua = {}, -- Used to format Lua code
 
-				-- Special Lua Config, as recommended by neovim help docs
-				lua_ls = {
-					on_init = function(client)
-						client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
+		-- Special Lua Config, as recommended by neovim help docs
+		lua_ls = {
+			on_init = function(client)
+				client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
 
 						if client.workspace_folders then
 							local path = client.workspace_folders[1].name
@@ -782,7 +776,7 @@ do
 					-- <c-k>: Toggle signature help
 					--
 					-- See `:help blink-cmp-config-keymap` for defining your own keymap
-					preset = 'default',
+					preset = 'super-tab',
 
 					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
 					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
